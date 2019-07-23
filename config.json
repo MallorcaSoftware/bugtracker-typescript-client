@@ -1,0 +1,6 @@
+{
+	"npmName": "bugtracker_typescript_angular_client",
+	"npmVersion": "0.0.1",
+	"providedInRoot": "true",
+	"ngVersion": "7.0.0"
+}
