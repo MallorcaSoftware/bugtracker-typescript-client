@@ -111,6 +111,50 @@ export class ProjectControllerService {
     }
 
     /**
+     * getProject
+     * 
+     * @param projectId projectId
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getProjectUsingGET(projectId: number, observe?: 'body', reportProgress?: boolean): Observable<ProjectDto>;
+    public getProjectUsingGET(projectId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ProjectDto>>;
+    public getProjectUsingGET(projectId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ProjectDto>>;
+    public getProjectUsingGET(projectId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (projectId === null || projectId === undefined) {
+            throw new Error('Required parameter projectId was null or undefined when calling getProjectUsingGET.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (basicAuth) required
+        if (this.configuration.username || this.configuration.password) {
+            headers = headers.set('Authorization', 'Basic ' + btoa(this.configuration.username + ':' + this.configuration.password));
+        }
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.get<ProjectDto>(`${this.configuration.basePath}/projects/${encodeURIComponent(String(projectId))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * getProjects
      * 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
