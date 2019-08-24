@@ -3,6 +3,8 @@ import { Configuration } from './configuration';
 import { HttpClient } from '@angular/common/http';
 
 
+import { BugEntryControllerService } from './api/bugEntryController.service';
+import { BugEntryReportingControllerService } from './api/bugEntryReportingController.service';
 import { ProjectControllerService } from './api/projectController.service';
 import { UserControllerService } from './api/userController.service';
 
@@ -11,6 +13,8 @@ import { UserControllerService } from './api/userController.service';
   declarations: [],
   exports:      [],
   providers: [
+    BugEntryControllerService,
+    BugEntryReportingControllerService,
     ProjectControllerService,
     UserControllerService ]
 })
